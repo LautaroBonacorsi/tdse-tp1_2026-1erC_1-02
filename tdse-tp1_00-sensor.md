@@ -12,13 +12,13 @@ A continuación se presenta la tabla de transición de estados. En esta tabla ge
 | --- | --- | --- | --- | --- |
 | ST_BTN_XX_UP  | EV_BTN_XX_UP | | ST_BTN_XX_UP | |
 | ST_BTN_XX_UP  | EV_BTN_XX_DOWN | | ST_BTN_XX_FALLING | tick = DEL_BTN_XX_MAX |
-| ST_BTN_XX_FALLING | EV_BTN_XX_UP | [tick > 0] | ST_BTN_XX_FALLING | tick-- |
-| ST_BTN_XX_FALLING | EV_BTN_XX_UP | [tick == 0] | ST_BTN_XX_UP | |
-| ST_BTN_XX_FALLING | EV_BTN_XX_DOWN | [tick > 0] | ST_BTN_XX_FALLING | tick-- |
-| ST_BTN_XX_FALLING | EV_BTN_XX_DOWN | [tick = 0] | ST_BTN_XX_DOWN | raise EV_SYS_XX_DOWN |
+| ST_BTN_XX_FALLING | EV_BTN_XX_UP | [tick > DEL_BTN_MIN] | ST_BTN_XX_FALLING | tick-- |
+| ST_BTN_XX_FALLING | EV_BTN_XX_UP | [tick == DEL_BTN_MIN] | ST_BTN_XX_UP | |
+| ST_BTN_XX_FALLING | EV_BTN_XX_DOWN | [tick > DEL_BTN_MIN] | ST_BTN_XX_FALLING | tick-- |
+| ST_BTN_XX_FALLING | EV_BTN_XX_DOWN | [tick = DEL_BTN_MIN] | ST_BTN_XX_DOWN | raise EV_SYS_XX_DOWN |
 | ST_BTN_XX_DOWN | EV_BTN_XX_DOWN | | ST_BTN_XX_DOWN | |
 | ST_BTN_XX_DOWN | EV_BTN_XX_UP | | ST_BTN_XX_RISING | tick = DEL_BTN_XX_MAX |
-| ST_BTN_XX_RISING | EV_BTN_XX_DOWN | [tick > 0] | ST_BTN_XX_RISING | tick-- |
-| ST_BTN_XX_RISING | EV_BTN_XX_DOWN | [tick = 0] | ST_BTN_XX_DOWN | |
-| ST_BTN_XX_RISING | EV_BTN_XX_UP | [tick > 0] | ST_BTN_XX_RISING | tick-- |
-| ST_BTN_XX_RISING | EV_BTN_XX_UP | [tick = 0] | ST_BTN_XX_UP | raise EV_SYS_XX_UP |
+| ST_BTN_XX_RISING | EV_BTN_XX_DOWN | [tick > DEL_BTN_MIN] | ST_BTN_XX_RISING | tick-- |
+| ST_BTN_XX_RISING | EV_BTN_XX_DOWN | [tick = DEL_BTN_MIN] | ST_BTN_XX_DOWN | |
+| ST_BTN_XX_RISING | EV_BTN_XX_UP | [tick > DEL_BTN_MIN] | ST_BTN_XX_RISING | tick-- |
+| ST_BTN_XX_RISING | EV_BTN_XX_UP | [tick = DEL_BTN_MIN] | ST_BTN_XX_UP | raise EV_SYS_XX_UP |
