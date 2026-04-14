@@ -1,0 +1,10 @@
+Para la etapa final de actuación del trabajo práctico, el modelo Actuator se encarga de traducir las decisiones lógicas procesadas por el sistema central en acciones físicas concretas sobre el hardware. Este módulo de software temporizado, que mantiene su ejecución cíclica no bloqueante cada un milisegundo, reacciona de forma exclusiva a dos eventos de entrada provenientes de la interfaz del módulo System: EV_LED_ON y EV_LED_OFF.
+
+En cuanto a la ejecución de las acciones, el diseño incorpora una variable interna del tipo booleana denominada "led", junto con dos constantes que facilitan la lectura del código: LED_ON configurada con un valor verdadero y LED_OFF con un valor falso. Cuando el actuador se encuentra en su estado de reposo inicial ST_LED_OFF y detecta en su cola de mensajes la llegada del evento EV_LED_ON, la transición ejecuta una acción que asigna el valor verdadero a la variable interna mediante la instrucción "led = LED_ON", avanzando así al estado ST_LED_ON. De manera inversa, si el equipo se encuentra con el indicador activado y recibe el evento EV_LED_OFF, la máquina de estados ejecuta la acción "led = LED_OFF" durante la transición para actualizar el estado lógico de la variable y retornar al estado de apagado.
+
+Ambos estados lógicos, tanto el de apagado como el de encendido, cuentan con una acción del tipo "entry" que invoca de forma automática la operación op_led(led). Esto significa que, inmediatamente después de concretarse cualquiera de las transiciones y de haberse actualizado el valor de la variable booleana, el modelo ejecuta esta función pasándole dicho valor como argumento. Esta operación es la responsable final de escribir el registro correspondiente en el microcontrolador para modificar el nivel de tensión en el pin de salida digital conectado al LED.
+
+| Current State |	Event |	[Guard] |	Next State |	Actions |
+| --- | --- | --- | --- | --- |
+|ST_LED_OFF |	EV_LED_ON |	|	ST_LED_ON |	led = LED_ON |
+|ST_LED_ON | EV_LED_OFF |	|	ST_LED_OFF | led = LED_OFF |
